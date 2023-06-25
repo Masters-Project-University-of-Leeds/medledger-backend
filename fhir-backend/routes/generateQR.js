@@ -1,3 +1,4 @@
+const { Client, Wallet } = require("xrpl");
 const { XummSdk } = require("xumm-sdk");
 
 const checkIfUserExists = (userAddress) => {
@@ -17,7 +18,7 @@ const checkIfUserExists = (userAddress) => {
             await client.disconnect();
 
             // Check if the user address is present in the response
-            const userAddressExists = response.result.account_nfts.some((nft) => nft.URI === body.Account);
+            const userAddressExists = response.result.account_nfts.some((nft) => nft.URI === userAddress);
 
             if (userAddressExists) {
                 resolve({ status: "Success", message: "User Address Exists" });
