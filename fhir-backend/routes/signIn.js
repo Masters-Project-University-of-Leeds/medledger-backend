@@ -24,6 +24,7 @@ const checkUserAddress = (userAddress) => {
             const wallet = await Wallet.fromSecret(process.env.XRPL_SECRET);
 
             if (wallet.address === userAddress) {
+                await client.disconnect();
                 resolve({ status: "Success", message: "Admin" });
                 return;
             }
