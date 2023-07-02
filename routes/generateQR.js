@@ -6,7 +6,6 @@ const checkIfUserExists = (userAddress) => {
         try {
             const client = new Client(process.env.XRPL_WSS_CLIENT);
             await client.connect();
-            console.log("Connected to XRPL");
 
             const wallet = await Wallet.fromSecret(process.env.XRPL_SECRET);
 

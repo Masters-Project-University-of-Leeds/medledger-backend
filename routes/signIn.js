@@ -1,4 +1,4 @@
-const { Client, Wallet } = require("xrpl");
+const { Client, Wallet, convertHexToString } = require("xrpl");
 const { AES, enc } = require("crypto-js");
 
 const jwt = require("jsonwebtoken");
@@ -19,7 +19,6 @@ const checkUserAddress = (userAddress) => {
             // Connect to xrp-ledger
             const client = new Client(process.env.XRPL_WSS_CLIENT);
             await client.connect();
-            console.log("Connected to XRPL");
 
             const wallet = await Wallet.fromSecret(process.env.XRPL_SECRET);
 
@@ -39,7 +38,7 @@ const checkUserAddress = (userAddress) => {
             await client.disconnect();
 
             // Check if the user address is present in the response
-            const userAddressExists = response.result.account_nfts.some((nft) => nft.URI === userAddress);
+            const userAddressExists = response.result.account_nfts.some((nft) => convertHexToString(nft.URI) === userAddress);
             if (userAddressExists) {
                 resolve({ status: "Success", message: "User Address Exists" });
             } else {
